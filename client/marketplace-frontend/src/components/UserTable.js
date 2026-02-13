@@ -1,6 +1,6 @@
-import { FiEdit2 } from "react-icons/fi";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-const UserTable = ({ users, onEditRole }) => {
+const UserTable = ({ users, onEditRole, onDeleteUser }) => {
   const getRoleBadgeClass = (role) => {
     switch (role) {
       case "administrador":
@@ -59,13 +59,20 @@ const UserTable = ({ users, onEditRole }) => {
                   </span>
                 </td>
                 <td>{formatDate(user.createdAt)}</td>
-                <td>
+                <td className="actions-cell">
                   <button
-                    className="btn-icon"
+                    className="btn-icon edit"
                     onClick={() => onEditRole(user)}
                     title="Cambiar rol"
                   >
                     <FiEdit2 />
+                  </button>
+                  <button
+                    className="btn-icon delete"
+                    onClick={() => onDeleteUser(user._id)}
+                    title="Eliminar usuario"
+                  >
+                    <FiTrash2 />
                   </button>
                 </td>
               </tr>

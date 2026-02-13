@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import UserTable from "../components/UserTable";
 import RoleModal from "../components/RoleModal";
 import ProductTable from "../components/ProductTable";
+import ProductModal from "../components/ProductModal";
 import api from "../services/api";
 import productService from "../services/productService";
 
@@ -11,7 +12,9 @@ const DashboardAdmin = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [currentProduct, setCurrentProduct] = useState(null);
   const [activeTab, setActiveTab] = useState("users"); // 'users' or 'products'
 
   const fetchData = async () => {
@@ -58,6 +61,18 @@ const DashboardAdmin = () => {
     }
   };
 
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm("¿Seguro que deseas eliminar este usuario?")) {
+      try {
+        await api.delete(`/admin/users/${userId}`);
+        fetchData();
+      } catch (error) {
+        console.error("Error eliminando usuario:", error);
+        alert(error.response?.data?.message || "Error al eliminar usuario");
+      }
+    }
+  };
+
   // --- Product Management (Admin) ---
   const handleDeleteProduct = async (id) => {
     if (
@@ -76,10 +91,21 @@ const DashboardAdmin = () => {
   };
 
   const handleEditProduct = (product) => {
-    alert(
-      "Como admin, por ahora solo puedes eliminar productos. La edición es por parte del vendedor.",
-    );
-    // Podríamos implementar edición para admin si se requiere rehaciendo ProductModal para soportar edición arbitraria
+    setCurrentProduct(product);
+    setIsProductModalOpen(true);
+  };
+
+  const handleSaveProduct = async (productData) => {
+    try {
+      if (currentProduct) {
+        await productService.updateProduct(currentProduct._id, productData);
+      }
+      setIsProductModalOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error("Error guardando producto:", error);
+      alert("Error al guardar producto");
+    }
   };
 
   if (loading) {
@@ -142,7 +168,11 @@ const DashboardAdmin = () => {
             <div className="card-header">
               <h2>Gestión de Usuarios</h2>
             </div>
-            <UserTable users={users} onEditRole={handleEditRole} />
+            <UserTable
+              users={users}
+              onEditRole={handleEditRole}
+              onDeleteUser={handleDeleteUser}
+            />
           </div>
         )}
 
@@ -165,6 +195,15 @@ const DashboardAdmin = () => {
             onClose={() => setIsRoleModalOpen(false)}
             currentUser={selectedUser}
             onSave={handleSaveRole}
+          />
+        )}
+
+        {isProductModalOpen && (
+          <ProductModal
+            isOpen={isProductModalOpen}
+            onClose={() => setIsProductModalOpen(false)}
+            onSave={handleSaveProduct}
+            productToEdit={currentProduct}
           />
         )}
       </div>
