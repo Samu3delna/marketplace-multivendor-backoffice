@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
+import { useSearchParams } from "react-router-dom";
+import AdminLayout from "../components/AdminLayout";
 import UserTable from "../components/UserTable";
 import RoleModal from "../components/RoleModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal";
 import api from "../services/api";
 import productService from "../services/productService";
+import { FiUsers, FiPackage, FiShoppingBag, FiStar } from "react-icons/fi";
 
 const DashboardAdmin = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "users";
+
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +20,10 @@ const DashboardAdmin = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const [activeTab, setActiveTab] = useState("users"); // 'users' or 'products'
+
+  const setActiveTab = (tab) => {
+    setSearchParams({ tab });
+  };
 
   const fetchData = async () => {
     try {
@@ -117,56 +125,116 @@ const DashboardAdmin = () => {
   }
 
   return (
-    <Layout>
+    <AdminLayout>
       <div className="dashboard fade-in-up">
-        <div className="dashboard-header">
-          <h1>Panel de Administración</h1>
-          <p>Gestión global del sistema</p>
-        </div>
-
-        <div className="stats-grid">
-          <div className="stat-card glass-effect stat-card-purple">
-            <div className="stat-icon">👥</div>
-            <div className="stat-info">
-              <h3>Usuarios</h3>
-              <p className="stat-value">{stats.totalUsers}</p>
+        <div className="dashboard-header border-bottom pb-4 mb-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-extrabold tracking-tight">
+                Consola de Control
+              </h1>
+              <p className="text-muted">
+                Centro de mando del ecosistema multivendor
+              </p>
             </div>
-          </div>
-          <div className="stat-card glass-effect stat-card-blue">
-            <div className="stat-icon">📦</div>
-            <div className="stat-info">
-              <h3>Productos</h3>
-              <p className="stat-value">{stats.totalProducts}</p>
-            </div>
-          </div>
-          <div className="stat-card glass-effect stat-card-orange">
-            <div className="stat-icon">🏪</div>
-            <div className="stat-info">
-              <h3>Vendedores</h3>
-              <p className="stat-value">{stats.usersVendors}</p>
+            <div className="admin-status-indicator flex items-center gap-2">
+              <span className="pulse-dot"></span>
+              <span className="text-sm font-semibold text-green-400">
+                Sistema Online
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="tabs-container mb-4">
+        <div className="stats-grid grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="stat-card admin-stat-card">
+            <div className="stat-icon">
+              <FiUsers />
+            </div>
+            <div className="stat-info">
+              <p className="stat-label">Usuarios Totales</p>
+              <h3>{stats.totalUsers}</h3>
+            </div>
+          </div>
+          <div className="stat-card admin-stat-card">
+            <div className="stat-icon">
+              <FiPackage />
+            </div>
+            <div className="stat-info">
+              <p className="stat-label">Catálogo Global</p>
+              <h3>{stats.totalProducts}</h3>
+            </div>
+          </div>
+          <div className="stat-card admin-stat-card">
+            <div className="stat-icon">
+              <FiShoppingBag />
+            </div>
+            <div className="stat-info">
+              <p className="stat-label">Vendedores</p>
+              <h3>{stats.usersVendors}</h3>
+            </div>
+          </div>
+          <div className="stat-card admin-stat-card">
+            <div className="stat-icon">
+              <FiStar />
+            </div>
+            <div className="stat-info">
+              <p className="stat-label">Admins</p>
+              <h3>{stats.usersAdmins}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex bg-gray-900/50 p-1 rounded-lg w-fit mb-6 border border-white/5">
           <button
-            className={`btn ${activeTab === "users" ? "btn-primary" : "btn-secondary"} mr-2`}
+            className={`px-6 py-2 rounded-md font-medium transition-all ${activeTab === "users" ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20" : "text-gray-400 hover:text-white"}`}
             onClick={() => setActiveTab("users")}
           >
-            Usuarios
+            Gestión de Usuarios
           </button>
           <button
-            className={`btn ${activeTab === "products" ? "btn-primary" : "btn-secondary"}`}
+            className={`px-6 py-2 rounded-md font-medium transition-all ${activeTab === "products" ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20" : "text-gray-400 hover:text-white"}`}
             onClick={() => setActiveTab("products")}
           >
-            Productos
+            Gestión de Productos
           </button>
         </div>
 
+        {activeTab === "metrics" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="card admin-card">
+              <div className="card-header border-bottom mb-4">
+                <h2 className="text-xl font-bold">Actividad de Usuarios</h2>
+              </div>
+              <div className="h-64 flex items-center justify-center text-muted">
+                [ Gráfico de actividad mockup ]
+              </div>
+            </div>
+            <div className="card admin-card">
+              <div className="card-header border-bottom mb-4">
+                <h2 className="text-xl font-bold">Ingresos Globales</h2>
+              </div>
+              <div className="h-64 flex items-center justify-center text-muted">
+                [ Gráfico de ingresos mockup ]
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === "users" && (
-          <div className="card glass-effect">
-            <div className="card-header">
-              <h2>Gestión de Usuarios</h2>
+          <div className="card admin-card fade-in">
+            <div className="card-header flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">Gestión de Usuarios</h2>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Buscar usuario..."
+                  className="form-select bg-gray-800 border-none px-4 py-2 w-64"
+                />
+                <button className="btn btn-primary px-4 py-2">
+                  + Nuevo Admin
+                </button>
+              </div>
             </div>
             <UserTable
               users={users}
@@ -177,9 +245,14 @@ const DashboardAdmin = () => {
         )}
 
         {activeTab === "products" && (
-          <div className="card glass-effect">
-            <div className="card-header">
-              <h2>Gestión de Productos Global</h2>
+          <div className="card admin-card fade-in">
+            <div className="card-header flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">
+                Inventario Global de Productos
+              </h2>
+              <button className="btn btn-secondary px-4 py-2">
+                Exportar CSV
+              </button>
             </div>
             <ProductTable
               products={products}
@@ -189,6 +262,54 @@ const DashboardAdmin = () => {
           </div>
         )}
 
+        {activeTab === "orders" && (
+          <div className="card admin-card fade-in">
+            <div className="card-header mb-6">
+              <h2 className="text-xl font-bold">Pedidos Globales</h2>
+            </div>
+            <div className="text-center py-20 text-muted">
+              <FiShoppingBag size={48} className="mx-auto mb-4 opacity-20" />
+              <p>Cargando transacciones en tiempo real...</p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "settings" && (
+          <div className="max-w-2xl">
+            <div className="card admin-card mb-6">
+              <h2 className="text-xl font-bold mb-6">
+                Configuración del Marketplace
+              </h2>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                  <div>
+                    <p className="font-semibold">Modo Mantenimiento</p>
+                    <p className="text-sm text-muted">
+                      Desactiva el acceso público al marketplace
+                    </p>
+                  </div>
+                  <div className="w-12 h-6 bg-gray-700 rounded-full relative">
+                    <div className="absolute left-1 top-1 w-4 h-4 bg-gray-400 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                  <div>
+                    <p className="font-semibold">Registro de Vendedores</p>
+                    <p className="text-sm text-muted">
+                      Permitir que nuevos usuarios se registren como vendedores
+                    </p>
+                  </div>
+                  <div className="w-12 h-6 bg-cyan-600 rounded-full relative">
+                    <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                  </div>
+                </div>
+                <button className="btn btn-primary w-full">
+                  Guardar Cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {isRoleModalOpen && (
           <RoleModal
             isOpen={isRoleModalOpen}
@@ -207,7 +328,7 @@ const DashboardAdmin = () => {
           />
         )}
       </div>
-    </Layout>
+    </AdminLayout>
   );
 };
 
