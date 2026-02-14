@@ -14,15 +14,7 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
-const helmet = require("helmet");
-const mongoSanitize = require("express-mongo-sanitize");
-const xss = require("xss-clean");
-const hpp = require("hpp");
-
-// 1. Headers de seguridad (Helmet va primero)
-app.use(helmet());
-
-// 2. Configuración CORS (Antes de procesar requests)
+// 1. Configuración CORS (DEBE IR ANTES QUE CUALQUIER OTRA COSA)
 app.use(
   cors({
     origin: [
@@ -31,8 +23,21 @@ app.use(
       "https://marketplace-multivendor-backoffice.vercel.app",
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+// Habilitar pre-flight para todas las rutas
+app.options("*", cors());
+
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+
+// 2. Headers de seguridad
+app.use(helmet());
 
 // 3. Body Parser (Necesario para que funcionen las sanitizaciones posteriores)
 app.use(express.json({ limit: "10kb" }));
