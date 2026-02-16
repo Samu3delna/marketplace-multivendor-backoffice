@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "./ProductModal.css"; // Vamos a necesitar estilos específicos o usar App.css
 
 const ProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
   const [formData, setFormData] = useState({
@@ -44,14 +43,31 @@ const ProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("La imagen es muy pesada. Máximo 2MB.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          image: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Convertir precio y stock a números
     const dataToSave = {
       ...formData,
       price: Number(formData.price),
       stock: Number(formData.stock),
-      images: [formData.image], // Enviar como array
+      images: [formData.image],
     };
     onSave(dataToSave);
   };
@@ -138,25 +154,59 @@ const ProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
           </div>
 
           <div className="form-group">
-            <label>URL de Imagen</label>
-            <input
-              type="url"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              required
-              placeholder="https://ejemplo.com/imagen.jpg"
-              className="input-field"
-            />
+            <label>Imagen del Producto</label>
+            <div className="image-upload-sections">
+              <div className="file-upload">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  id="file-upload-input"
+                  className="hidden-input"
+                />
+                <label
+                  htmlFor="file-upload-input"
+                  className="btn btn-secondary btn-block"
+                >
+                  📂 Seleccionar del equipo
+                </label>
+              </div>
+
+              <div className="url-upload mt-2">
+                <input
+                  type="url"
+                  name="image"
+                  value={
+                    formData.image && formData.image.startsWith("data:")
+                      ? ""
+                      : formData.image
+                  }
+                  onChange={handleChange}
+                  placeholder="O pega una URL de imagen aquí"
+                  className="input-field"
+                />
+              </div>
+            </div>
           </div>
 
           {formData.image && (
-            <div className="image-preview">
-              <img src={formData.image} alt="Vista previa" />
+            <div className="image-preview-container">
+              <img
+                src={formData.image}
+                alt="Vista previa"
+                className="img-preview"
+              />
+              <button
+                type="button"
+                className="btn-remove-img"
+                onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
+              >
+                Eliminar
+              </button>
             </div>
           )}
 
-          <div className="modal-actions">
+          <div className="modal-actions mt-4">
             <button
               type="button"
               className="btn btn-secondary"
@@ -165,7 +215,7 @@ const ProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
               Cancelar
             </button>
             <button type="submit" className="btn btn-primary">
-              Guardar
+              {productToEdit ? "Actualizar" : "Crear Producto"}
             </button>
           </div>
         </form>

@@ -32,11 +32,17 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-// 2. Headers de seguridad
-app.use(helmet());
+// 2. Headers de seguridad - Configurado para no bloquear CORS
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginEmitPolicy: { policy: "cross-origin" },
+  }),
+);
 
-// 3. Body Parser (Necesario para que funcionen las sanitizaciones posteriores)
-app.use(express.json({ limit: "10kb" }));
+// 3. Body Parser - Límite aumentado para soportar imágenes Base64
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Debug: Ver qué llega en el body
 app.use((req, res, next) => {

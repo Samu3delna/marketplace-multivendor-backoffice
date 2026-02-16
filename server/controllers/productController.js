@@ -105,10 +105,10 @@ exports.updateProduct = async (req, res) => {
     }
 
     // Verificar propiedad
-    if (
-      product.vendor.toString() !== req.user.id &&
-      req.user.role !== "administrador"
-    ) {
+    const vendorId = product.vendor.toString();
+    const currentUserId = req.user.id.toString();
+
+    if (vendorId !== currentUserId && req.user.role !== "administrador") {
       return res.status(403).json({
         success: false,
         message: "No autorizado para editar este producto",
@@ -147,10 +147,10 @@ exports.deleteProduct = async (req, res) => {
     }
 
     // Verificar propiedad
-    if (
-      product.vendor.toString() !== req.user.id &&
-      req.user.role !== "administrador"
-    ) {
+    const vendorId = product.vendor.toString();
+    const currentUserId = req.user.id.toString();
+
+    if (vendorId !== currentUserId && req.user.role !== "administrador") {
       return res.status(403).json({
         success: false,
         message: "No autorizado para eliminar este producto",

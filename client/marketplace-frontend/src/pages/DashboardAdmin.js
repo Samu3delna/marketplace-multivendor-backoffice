@@ -138,9 +138,9 @@ const DashboardAdmin = () => {
                 Visión general y gestión de todo el ecosistema.
               </p>
             </div>
-            <div className="admin-status-indicator flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-gray-100">
+            <div className="admin-status-indicator flex items-center gap-2 bg-glass p-2 rounded-lg shadow-sm border border-white/5">
               <span className="pulse-dot"></span>
-              <span className="text-sm font-bold text-gray-700">
+              <span className="text-sm font-bold text-secondary">
                 Sistema Activo
               </span>
             </div>
@@ -190,15 +190,15 @@ const DashboardAdmin = () => {
           </div>
         </div>
 
-        <div className="flex bg-white p-1 rounded-lg w-fit mb-8 shadow-sm border border-gray-100">
+        <div className="flex bg-secondary p-1 rounded-lg w-fit mb-8 shadow-sm border border-white/5">
           <button
-            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "users" ? "bg-purple-600 text-white shadow-md" : "text-gray-500 hover:text-purple-600"}`}
+            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "users" ? "bg-purple-600 text-white shadow-md" : "text-muted hover:text-white"}`}
             onClick={() => setActiveTab("users")}
           >
             Gestión de Usuarios
           </button>
           <button
-            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "products" ? "bg-purple-600 text-white shadow-md" : "text-gray-500 hover:text-purple-600"}`}
+            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "products" ? "bg-purple-600 text-white shadow-md" : "text-muted hover:text-white"}`}
             onClick={() => setActiveTab("products")}
           >
             Catálogo Global
@@ -209,10 +209,10 @@ const DashboardAdmin = () => {
           <div className="admin-card fade-in">
             <div className="card-header flex justify-between items-center mb-6">
               <div>
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold text-primary">
                   Control de Usuarios
                 </h2>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-secondary">
                   Cambia roles, promueve vendedores o elimina cuentas.
                 </p>
               </div>
@@ -220,7 +220,7 @@ const DashboardAdmin = () => {
                 <input
                   type="text"
                   placeholder="Filtrar por nombre o email..."
-                  className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 w-72 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="bg-input border border-white/5 rounded-lg px-4 py-2 w-72 focus:ring-2 focus:ring-purple-500/50 outline-none transition-all text-primary"
                 />
               </div>
             </div>
@@ -236,14 +236,14 @@ const DashboardAdmin = () => {
           <div className="admin-card fade-in">
             <div className="card-header flex justify-between items-center mb-6">
               <div>
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold text-primary">
                   Inventario del Marketplace
                 </h2>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-secondary">
                   Supervisa y elimina productos de cualquier vendedor.
                 </p>
               </div>
-              <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold transition-all">
+              <button className="bg-secondary hover:bg-glass text-primary px-4 py-2 rounded-lg font-bold border border-white/5 transition-all">
                 Generar Reporte
               </button>
             </div>
@@ -274,26 +274,30 @@ const DashboardAdmin = () => {
                 Configuración del Marketplace
               </h2>
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5">
                   <div>
-                    <p className="font-semibold">Modo Mantenimiento</p>
-                    <p className="text-sm text-muted">
+                    <p className="font-semibold text-primary">
+                      Modo Mantenimiento
+                    </p>
+                    <p className="text-sm text-secondary">
                       Desactiva el acceso público al marketplace
                     </p>
                   </div>
-                  <div className="w-12 h-6 bg-gray-700 rounded-full relative">
-                    <div className="absolute left-1 top-1 w-4 h-4 bg-gray-400 rounded-full"></div>
+                  <div className="w-12 h-6 bg-gray-700/50 rounded-full relative cursor-pointer">
+                    <div className="absolute left-1 top-1 w-4 h-4 bg-gray-500 rounded-full"></div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5">
                   <div>
-                    <p className="font-semibold">Registro de Vendedores</p>
-                    <p className="text-sm text-muted">
+                    <p className="font-semibold text-primary">
+                      Registro de Vendedores
+                    </p>
+                    <p className="text-sm text-secondary">
                       Permitir que nuevos usuarios se registren como vendedores
                     </p>
                   </div>
-                  <div className="w-12 h-6 bg-cyan-600 rounded-full relative">
-                    <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                  <div className="w-12 h-6 bg-purple-600/30 rounded-full relative cursor-pointer border border-purple-500/50">
+                    <div className="absolute right-1 top-1 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50"></div>
                   </div>
                 </div>
                 <button className="btn btn-primary w-full">
