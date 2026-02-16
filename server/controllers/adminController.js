@@ -30,6 +30,10 @@ const assignRole = async (req, res) => {
 
     // Validar que se proporcionó un rol
     if (!role) {
+      console.log(
+        "Error assignRole: Falta el campo 'role' en el body",
+        req.body,
+      );
       return res.status(400).json({
         success: false,
         message: "Debe proporcionar un rol.",
@@ -39,9 +43,12 @@ const assignRole = async (req, res) => {
     // Validar que el rol sea válido
     const validRoles = ["cliente", "vendedor", "administrador"];
     if (!validRoles.includes(role)) {
+      console.log(`Error assignRole: Rol '${role}' no es válido.`, {
+        validRoles,
+      });
       return res.status(400).json({
         success: false,
-        message: `Rol no válido. Los roles disponibles son: ${validRoles.join(", ")}.`,
+        message: `Rol '${role}' no válido. Los roles disponibles son: ${validRoles.join(", ")}.`,
       });
     }
 

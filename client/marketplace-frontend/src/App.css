@@ -35,6 +35,7 @@
 
 .admin-main-content {
   margin-left: var(--sidebar-width);
+  transition: margin-left var(--transition-slow);
 }
 
 .public-layout {
@@ -75,22 +76,24 @@
 }
 
 .menu-toggle {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.25rem;
+  background: var(--bg-glass);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
+  padding: 10px;
+  border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 101;
 }
 
 .menu-toggle:hover {
-  color: var(--text-primary);
-  background: var(--bg-glass);
+  background: var(--accent-purple);
+  color: white;
+  transform: scale(1.05);
 }
 
 .navbar-brand {
@@ -263,8 +266,8 @@
 }
 
 .sidebar-link:hover {
-  background-color: #f7f7f9;
-  color: var(--text-primary);
+  background-color: rgba(145, 85, 253, 0.08);
+  color: var(--border-active);
   transform: translateX(5px);
 }
 
@@ -279,7 +282,8 @@
 .sidebar-user-brief {
   padding: 20px;
   margin: 15px;
-  background-color: #f9f9fb;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   display: flex;
   align-items: center;

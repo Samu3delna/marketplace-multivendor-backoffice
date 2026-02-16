@@ -59,14 +59,27 @@ const DashboardAdmin = () => {
     setIsRoleModalOpen(true);
   };
 
-  const handleSaveRole = async (newRole) => {
+  const handleSaveRole = async (userId, newRole) => {
+    if (!userId || !newRole) {
+      alert("Error: Datos incompletos para actualizar el rol");
+      return;
+    }
+
     try {
-      await api.put(`/admin/users/${selectedUser._id}/role`, { role: newRole });
-      setIsRoleModalOpen(false);
-      fetchData(); // Recargar datos
+      setLoading(true);
+      const res = await api.put(`/admin/users/${userId}/role`, {
+        role: newRole,
+      });
+      if (res.data.success) {
+        setIsRoleModalOpen(false);
+        fetchData();
+        alert("Rol actualizado correctamente");
+      }
     } catch (error) {
       console.error("Error actualizando rol:", error);
-      alert("Error al actualizar el rol");
+      alert(error.response?.data?.message || "Error al actualizar el rol");
+    } finally {
+      setLoading(false);
     }
   };
 
