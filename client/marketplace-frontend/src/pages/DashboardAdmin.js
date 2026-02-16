@@ -32,8 +32,8 @@ const DashboardAdmin = () => {
         api.get("/admin/users"),
         productService.getProducts(), // Admin ve todos
       ]);
-      setUsers(usersRes.data.data);
-      setProducts(productsRes.data.data);
+      setUsers(usersRes.data?.data || []);
+      setProducts(productsRes.data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -46,10 +46,10 @@ const DashboardAdmin = () => {
   }, []);
 
   const stats = {
-    totalUsers: users.length,
-    usersAdmins: users.filter((u) => u.role === "administrador").length,
-    usersVendors: users.filter((u) => u.role === "vendedor").length,
-    totalProducts: products.length,
+    totalUsers: users?.length || 0,
+    usersAdmins: users?.filter((u) => u.role === "administrador").length || 0,
+    usersVendors: users?.filter((u) => u.role === "vendedor").length || 0,
+    totalProducts: products?.length || 0,
   };
 
   // --- User Management ---
