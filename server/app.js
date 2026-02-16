@@ -17,11 +17,7 @@ const app = express();
 // 1. Configuración CORS (DEBE IR ANTES QUE CUALQUIER OTRA COSA)
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      process.env.FRONTEND_URL, // URL que te asigne Vercel
-    ].filter(Boolean), // Elimina valores nulos si la variable no existe
+    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
