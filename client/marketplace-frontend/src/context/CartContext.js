@@ -17,11 +17,13 @@ export const CartProvider = ({ children }) => {
         try {
           const data = await cartService.getCart();
           if (data.success && data.data.items.length > 0) {
-            // El backend devuelve items as [{product, quantity}]
-            const items = data.data.items.map((i) => ({
-              ...i.product,
-              quantity: i.quantity,
-            }));
+            // Filtrar items donde el producto pueda ser null (si se eliminó de la DB)
+            const items = data.data.items
+              .filter((i) => i.product !== null)
+              .map((i) => ({
+                ...i.product,
+                quantity: i.quantity,
+              }));
             setCartItems(items);
             return;
           }
@@ -45,12 +47,16 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("marketplace_cart", JSON.stringify(cartItems));
 
     const syncCart = async () => {
-      if (isAuthenticated) {
+      if (isAuthenticated && cartItems.length >= 0) {
         try {
-          const items = cartItems.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          }));
+          // Filtrar items que tengan _id (evitar enviar undefined al servidor)
+          const items = cartItems
+            .filter((item) => item && item._id)
+            .map((item) => ({
+              product: item._id,
+              quantity: item.quantity || 1,
+            }));
+
           await cartService.updateCart(items);
         } catch (error) {
           console.error("Error al sincronizar carrito con el servidor", error);

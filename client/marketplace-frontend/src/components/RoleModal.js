@@ -2,7 +2,9 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi";
 
 const RoleModal = ({ user, onClose, onConfirm, loading }) => {
-  const [selectedRole, setSelectedRole] = useState(user.role);
+  const [selectedRole, setSelectedRole] = useState(user?.role || "cliente");
+
+  if (!user) return null;
 
   const handleConfirm = () => {
     if (selectedRole !== user.role) {

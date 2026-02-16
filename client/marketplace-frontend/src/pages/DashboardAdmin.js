@@ -309,10 +309,10 @@ const DashboardAdmin = () => {
         )}
         {isRoleModalOpen && (
           <RoleModal
-            isOpen={isRoleModalOpen}
+            user={selectedUser}
             onClose={() => setIsRoleModalOpen(false)}
-            currentUser={selectedUser}
-            onSave={handleSaveRole}
+            onConfirm={handleSaveRole}
+            loading={loading}
           />
         )}
 

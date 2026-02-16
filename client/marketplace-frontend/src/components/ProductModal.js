@@ -190,19 +190,26 @@ const ProductModal = ({ isOpen, onClose, onSave, productToEdit }) => {
           </div>
 
           {formData.image && (
-            <div className="image-preview-container">
-              <img
-                src={formData.image}
-                alt="Vista previa"
-                className="img-preview"
-              />
-              <button
-                type="button"
-                className="btn-remove-img"
-                onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}
-              >
-                Eliminar
-              </button>
+            <div className="preview-card mt-4">
+              <div className="preview-image-wrapper">
+                <img
+                  src={formData.image}
+                  alt="Vista previa"
+                  className="preview-img"
+                />
+                <button
+                  type="button"
+                  className="remove-preview-btn"
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, image: "" }))
+                  }
+                >
+                  &times;
+                </button>
+              </div>
+              <div className="preview-info">
+                <span>Vista previa de la imagen</span>
+              </div>
             </div>
           )}
 

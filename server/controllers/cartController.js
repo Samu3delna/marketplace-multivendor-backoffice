@@ -24,20 +24,24 @@ exports.getCart = async (req, res) => {
 // @access  Private
 exports.updateCart = async (req, res) => {
   try {
-    const { items } = req.body; // Array de { product, quantity }
+    const { items } = req.body;
+
+    // Filtrar items que no tengan producto válido para evitar errores de validación de Mongoose
+    const validItems = items.filter((item) => item.product);
 
     let cart = await Cart.findOne({ user: req.user.id });
 
     if (cart) {
-      cart.items = items;
+      cart.items = validItems;
       await cart.save();
     } else {
-      cart = await Cart.create({ user: req.user.id, items });
+      cart = await Cart.create({ user: req.user.id, items: validItems });
     }
 
     const updatedCart = await Cart.findById(cart._id).populate("items.product");
     res.status(200).json({ success: true, data: updatedCart });
   } catch (error) {
+    console.error("SERVER ERROR [updateCart]:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
