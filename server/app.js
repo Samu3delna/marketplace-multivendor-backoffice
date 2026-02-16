@@ -20,8 +20,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://marketplace-multivendor-backoffice.vercel.app",
-    ],
+      process.env.FRONTEND_URL, // URL que te asigne Vercel
+    ].filter(Boolean), // Elimina valores nulos si la variable no existe
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
