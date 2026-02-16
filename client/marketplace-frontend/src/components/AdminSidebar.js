@@ -3,102 +3,76 @@ import { useAuth } from "../context/AuthContext";
 import {
   FiUsers,
   FiPackage,
-  FiPieChart,
   FiSettings,
   FiShoppingBag,
-  FiActivity,
   FiShield,
 } from "react-icons/fi";
 
 const AdminSidebar = ({ isOpen }) => {
   const { user } = useAuth();
 
-  const adminItems = [
-    {
-      path: "/admin/dashboard?tab=metrics",
-      icon: <FiPieChart />,
-      label: "Vista General",
-    },
-    {
-      path: "/admin/dashboard?tab=users",
-      icon: <FiUsers />,
-      label: "Usuarios",
-    },
-    {
-      path: "/admin/dashboard?tab=products",
-      icon: <FiPackage />,
-      label: "Productos",
-    },
-    {
-      path: "/admin/dashboard?tab=orders",
-      icon: <FiShoppingBag />,
-      label: "Pedidos Globales",
-    },
-    {
-      path: "/admin/dashboard?tab=analytics",
-      icon: <FiActivity />,
-      label: "Métricas",
-    },
-    {
-      path: "/admin/dashboard?tab=settings",
-      icon: <FiSettings />,
-      label: "Configuración",
-    },
-  ];
-
   return (
-    <aside
-      className={`sidebar admin-sidebar ${isOpen ? "sidebar-open" : "sidebar-closed"}`}
-    >
-      <div className="sidebar-header admin-sidebar-header">
+    <aside className={`sidebar ${isOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      <div className="sidebar-header">
         <div className="admin-badge">
-          <FiShield className="admin-badge-icon" />
-          <span>ADMIN CASE</span>
+          <FiShield />
+          <span>MATERIO ADMIN</span>
         </div>
       </div>
 
       <div className="sidebar-user-brief">
         <div className="user-avatar-admin">
-          {user?.nombre?.charAt(0) || "A"}
+          {user?.nombre?.charAt(0).toUpperCase() || "A"}
         </div>
         <div className="user-info-admin">
           <p className="user-name-admin">{user?.nombre}</p>
-          <p className="user-role-admin">Super Administrador</p>
+          <p className="user-role-admin">Administrador Principal</p>
         </div>
       </div>
 
       <nav className="sidebar-nav">
-        <div className="sidebar-section-title">ADMINISTRACIÓN</div>
-        {adminItems.slice(0, 4).map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `sidebar-link admin-link ${isActive ? "admin-link-active" : ""}`
-            }
-          >
-            <span className="sidebar-icon">{item.icon}</span>
-            <span className="sidebar-label">{item.label}</span>
-          </NavLink>
-        ))}
+        <div className="sidebar-section-title">Principal</div>
+        <NavLink
+          to="/admin/dashboard?tab=users"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "admin-link-active" : ""}`
+          }
+        >
+          <FiUsers /> <span>Usuarios</span>
+        </NavLink>
 
-        <div className="sidebar-section-title">SISTEMA</div>
-        {adminItems.slice(4).map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `sidebar-link admin-link ${isActive ? "admin-link-active" : ""}`
-            }
-          >
-            <span className="sidebar-icon">{item.icon}</span>
-            <span className="sidebar-label">{item.label}</span>
-          </NavLink>
-        ))}
+        <NavLink
+          to="/admin/dashboard?tab=products"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "admin-link-active" : ""}`
+          }
+        >
+          <FiPackage /> <span>Productos Globales</span>
+        </NavLink>
+
+        <div className="sidebar-section-title">Análisis</div>
+        <NavLink
+          to="/admin/dashboard?tab=orders"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "admin-link-active" : ""}`
+          }
+        >
+          <FiShoppingBag /> <span>Ventas Totales</span>
+        </NavLink>
+
+        <div className="sidebar-section-title">Configuración</div>
+        <NavLink
+          to="/admin/dashboard?tab=settings"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "admin-link-active" : ""}`
+          }
+        >
+          <FiSettings /> <span>Ajustes del Sistema</span>
+        </NavLink>
       </nav>
 
       <div className="sidebar-footer">
-        <p className="sidebar-version">Admin Console v2.0</p>
+        <p className="sidebar-version">Premium Dashboard v3.0</p>
       </div>
     </aside>
   );

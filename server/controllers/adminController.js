@@ -84,4 +84,39 @@ const assignRole = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, assignRole };
+// @desc    Eliminar un usuario
+// @route   DELETE /api/admin/users/:id
+// @access  Solo Administrador
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Usuario no encontrado.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Usuario eliminado exitosamente.",
+    });
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({
+        success: false,
+        message: "ID de usuario no válido.",
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: "Error al eliminar el usuario.",
+    });
+  }
+};
+
+module.exports = { getUsers, assignRole, deleteUser };

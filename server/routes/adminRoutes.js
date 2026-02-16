@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getUsers, assignRole } = require("../controllers/adminController");
+const {
+  getUsers,
+  assignRole,
+  deleteUser,
+} = require("../controllers/adminController");
 const authMiddleware = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
@@ -13,5 +17,8 @@ router.get("/users", getUsers);
 
 // PUT /api/admin/users/:id/role - Asignar rol a un usuario
 router.put("/users/:id/role", assignRole);
+
+// DELETE /api/admin/users/:id - Eliminar usuario
+router.delete("/users/:id", deleteUser);
 
 module.exports = router;

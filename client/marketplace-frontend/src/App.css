@@ -22,12 +22,13 @@
   flex: 1;
   margin-left: var(--sidebar-width);
   padding: 32px;
-  transition: margin-left var(--transition-slow);
-  min-height: calc(100vh - var(--navbar-height));
+  transition: all var(--transition-slow);
+  min-height: 100vh;
+  background-color: var(--bg-primary);
 }
 
-.main-expanded {
-  margin-left: var(--sidebar-collapsed);
+.admin-main-content {
+  margin-left: var(--sidebar-width);
 }
 
 .public-layout {
@@ -198,90 +199,111 @@
    ============================================ */
 .sidebar {
   position: fixed;
-  top: var(--navbar-height);
+  top: 0;
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
-  background: rgba(12, 12, 30, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-right: none;
+  box-shadow: 0 0 15px 0 rgba(58, 53, 65, 0.1);
   display: flex;
   flex-direction: column;
   transition: transform var(--transition-slow);
   z-index: 90;
-  overflow-y: auto;
-}
-
-.sidebar-closed {
-  transform: translateX(-100%);
-}
-
-.sidebar-open {
-  transform: translateX(0);
 }
 
 .sidebar-header {
-  padding: 24px 20px 12px;
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
 }
 
-.sidebar-title {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
+.admin-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-purple);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.5px;
 }
 
 .sidebar-nav {
-  padding: 8px 12px;
+  padding: 10px 15px;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+}
+
+.sidebar-section-title {
+  padding: 15px 15px 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 .sidebar-link {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
+  padding: 10px 15px;
+  margin: 4px 0;
+  border-radius: 8px;
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  transition: all var(--transition-fast);
+  transition: all 0.2s ease;
   text-decoration: none;
 }
 
 .sidebar-link:hover {
-  background: var(--bg-glass);
+  background-color: #f7f7f9;
   color: var(--text-primary);
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
 
-.sidebar-link-active {
-  background: rgba(139, 92, 246, 0.15);
-  color: var(--accent-purple);
-  border-left: 3px solid var(--accent-purple);
+.admin-link-active {
+  background: var(--gradient-primary) !important;
+  color: #fff !important;
+  box-shadow:
+    0 4px 8px -4px rgba(145, 85, 253, 0.42),
+    0 8px 20px -4px rgba(145, 85, 253, 0.5);
 }
 
-.sidebar-link-active:hover {
-  color: var(--accent-purple);
-}
-
-.sidebar-icon {
-  font-size: 1.15rem;
+.sidebar-user-brief {
+  padding: 20px;
+  margin: 15px;
+  background-color: #f9f9fb;
+  border-radius: 12px;
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
-.sidebar-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border-color);
+.user-avatar-admin {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
-.sidebar-version {
+.user-info-admin p {
+  margin: 0;
+}
+
+.user-name-admin {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.user-role-admin {
   font-size: 0.75rem;
   color: var(--text-muted);
 }
@@ -633,6 +655,138 @@
   color: var(--text-secondary);
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+/* --- Materio Premium Cards --- */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-icon-bg {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.premium-card-purple .stat-icon-bg {
+  background-color: rgba(145, 85, 253, 0.1);
+  color: #9155fd;
+}
+.premium-card-purple:hover .stat-icon-bg {
+  background-color: #9155fd;
+  color: #fff;
+}
+
+.premium-card-orange .stat-icon-bg {
+  background-color: rgba(255, 180, 0, 0.1);
+  color: #ffb400;
+}
+.premium-card-orange:hover .stat-icon-bg {
+  background-color: #ffb400;
+  color: #fff;
+}
+
+.premium-card-blue .stat-icon-bg {
+  background-color: rgba(22, 177, 255, 0.1);
+  color: #16b1ff;
+}
+.premium-card-blue:hover .stat-icon-bg {
+  background-color: #16b1ff;
+  color: #fff;
+}
+
+.premium-card-green .stat-icon-bg {
+  background-color: rgba(86, 202, 0, 0.1);
+  color: #56ca00;
+}
+.premium-card-green:hover .stat-icon-bg {
+  background-color: #56ca00;
+  color: #fff;
+}
+
+.stat-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 5px 0;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-trend {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stat-trend.success {
+  color: #56ca00;
+}
+.stat-trend.danger {
+  color: #ff4c51;
+}
+.stat-trend.neutral {
+  color: #8a8d93;
+}
+
+/* Table Enhancements */
+.admin-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.custom-table th {
+  background-color: #f9f9fb;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #3a3541de;
+  border-bottom: 2px solid #e7e7e8;
+}
+
+.custom-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e7e7e8;
+  color: #3a354199;
+}
+
+.custom-table tr:hover {
+  background-color: #f7f7f9;
 }
 
 /* ============================================

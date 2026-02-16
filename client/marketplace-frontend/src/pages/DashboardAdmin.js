@@ -49,6 +49,7 @@ const DashboardAdmin = () => {
     totalUsers: users?.length || 0,
     usersAdmins: users?.filter((u) => u.role === "administrador").length || 0,
     usersVendors: users?.filter((u) => u.role === "vendedor").length || 0,
+    usersClients: users?.filter((u) => u.role === "cliente").length || 0,
     totalProducts: products?.length || 0,
   };
 
@@ -130,110 +131,97 @@ const DashboardAdmin = () => {
         <div className="dashboard-header border-bottom pb-4 mb-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight">
-                Consola de Control
+              <h1 className="text-3xl font-extrabold tracking-tight text-primary">
+                Dashboard Administrativo
               </h1>
-              <p className="text-muted">
-                Centro de mando del ecosistema multivendor
+              <p className="text-secondary text-lg">
+                Visión general y gestión de todo el ecosistema.
               </p>
             </div>
-            <div className="admin-status-indicator flex items-center gap-2">
+            <div className="admin-status-indicator flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-gray-100">
               <span className="pulse-dot"></span>
-              <span className="text-sm font-semibold text-green-400">
-                Sistema Online
+              <span className="text-sm font-bold text-gray-700">
+                Sistema Activo
               </span>
             </div>
           </div>
         </div>
 
-        <div className="stats-grid grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="stat-card admin-stat-card">
-            <div className="stat-icon">
+        <div className="stats-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="stat-card premium-card-purple">
+            <div className="stat-icon-bg">
               <FiUsers />
             </div>
-            <div className="stat-info">
-              <p className="stat-label">Usuarios Totales</p>
-              <h3>{stats.totalUsers}</h3>
-            </div>
-          </div>
-          <div className="stat-card admin-stat-card">
-            <div className="stat-icon">
-              <FiPackage />
-            </div>
-            <div className="stat-info">
-              <p className="stat-label">Catálogo Global</p>
-              <h3>{stats.totalProducts}</h3>
-            </div>
-          </div>
-          <div className="stat-card admin-stat-card">
-            <div className="stat-icon">
-              <FiShoppingBag />
-            </div>
-            <div className="stat-info">
+            <div className="stat-content">
               <p className="stat-label">Vendedores</p>
               <h3>{stats.usersVendors}</h3>
+              <span className="stat-trend success">+2.5% hoy</span>
             </div>
           </div>
-          <div className="stat-card admin-stat-card">
-            <div className="stat-icon">
+          <div className="stat-card premium-card-orange">
+            <div className="stat-icon-bg">
+              <FiUsers />
+            </div>
+            <div className="stat-content">
+              <p className="stat-label">Clientes</p>
+              <h3>{stats.usersClients}</h3>
+              <span className="stat-trend success">+1.2% hoy</span>
+            </div>
+          </div>
+          <div className="stat-card premium-card-blue">
+            <div className="stat-icon-bg">
+              <FiPackage />
+            </div>
+            <div className="stat-content">
+              <p className="stat-label">Catálogo Global</p>
+              <h3>{stats.totalProducts}</h3>
+              <span className="stat-trend neutral">Sin cambios</span>
+            </div>
+          </div>
+          <div className="stat-card premium-card-green">
+            <div className="stat-icon-bg">
               <FiStar />
             </div>
-            <div className="stat-info">
-              <p className="stat-label">Admins</p>
+            <div className="stat-content">
+              <p className="stat-label">Administradores</p>
               <h3>{stats.usersAdmins}</h3>
+              <span className="stat-trend neutral">Personal core</span>
             </div>
           </div>
         </div>
 
-        <div className="flex bg-gray-900/50 p-1 rounded-lg w-fit mb-6 border border-white/5">
+        <div className="flex bg-white p-1 rounded-lg w-fit mb-8 shadow-sm border border-gray-100">
           <button
-            className={`px-6 py-2 rounded-md font-medium transition-all ${activeTab === "users" ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20" : "text-gray-400 hover:text-white"}`}
+            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "users" ? "bg-purple-600 text-white shadow-md" : "text-gray-500 hover:text-purple-600"}`}
             onClick={() => setActiveTab("users")}
           >
             Gestión de Usuarios
           </button>
           <button
-            className={`px-6 py-2 rounded-md font-medium transition-all ${activeTab === "products" ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20" : "text-gray-400 hover:text-white"}`}
+            className={`px-8 py-2.5 rounded-md font-bold transition-all ${activeTab === "products" ? "bg-purple-600 text-white shadow-md" : "text-gray-500 hover:text-purple-600"}`}
             onClick={() => setActiveTab("products")}
           >
-            Gestión de Productos
+            Catálogo Global
           </button>
         </div>
 
-        {activeTab === "metrics" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card admin-card">
-              <div className="card-header border-bottom mb-4">
-                <h2 className="text-xl font-bold">Actividad de Usuarios</h2>
-              </div>
-              <div className="h-64 flex items-center justify-center text-muted">
-                [ Gráfico de actividad mockup ]
-              </div>
-            </div>
-            <div className="card admin-card">
-              <div className="card-header border-bottom mb-4">
-                <h2 className="text-xl font-bold">Ingresos Globales</h2>
-              </div>
-              <div className="h-64 flex items-center justify-center text-muted">
-                [ Gráfico de ingresos mockup ]
-              </div>
-            </div>
-          </div>
-        )}
-
         {activeTab === "users" && (
-          <div className="card admin-card fade-in">
+          <div className="admin-card fade-in">
             <div className="card-header flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold">Gestión de Usuarios</h2>
-              <div className="flex gap-2">
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">
+                  Control de Usuarios
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Cambia roles, promueve vendedores o elimina cuentas.
+                </p>
+              </div>
+              <div className="flex gap-3">
                 <input
                   type="text"
-                  placeholder="Buscar usuario..."
-                  className="form-select bg-gray-800 border-none px-4 py-2 w-64"
+                  placeholder="Filtrar por nombre o email..."
+                  className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 w-72 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
                 />
-                <button className="btn btn-primary px-4 py-2">
-                  + Nuevo Admin
-                </button>
               </div>
             </div>
             <UserTable
@@ -245,13 +233,18 @@ const DashboardAdmin = () => {
         )}
 
         {activeTab === "products" && (
-          <div className="card admin-card fade-in">
+          <div className="admin-card fade-in">
             <div className="card-header flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold">
-                Inventario Global de Productos
-              </h2>
-              <button className="btn btn-secondary px-4 py-2">
-                Exportar CSV
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">
+                  Inventario del Marketplace
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Supervisa y elimina productos de cualquier vendedor.
+                </p>
+              </div>
+              <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-bold transition-all">
+                Generar Reporte
               </button>
             </div>
             <ProductTable
