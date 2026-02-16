@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "complexity": 3,
+  "description": "Configuración de Vercel para redirigir peticiones al servidor Express en una estructura monorepo.",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "server/app.js"
+    }
+  ]
+}

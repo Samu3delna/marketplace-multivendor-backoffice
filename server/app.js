@@ -111,3 +111,6 @@ connectDB().then(() => {
     console.log(`Servidor corriendo en puerto ${PORT}`);
   });
 });
+
+// Exportar para otros entornos (opcional)
+module.exports = app;
