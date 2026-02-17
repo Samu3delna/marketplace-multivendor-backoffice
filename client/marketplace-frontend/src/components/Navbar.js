@@ -1,11 +1,19 @@
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useNavigate, Link } from "react-router-dom";
-import { FiLogOut, FiMenu, FiShoppingCart } from "react-icons/fi";
+import {
+  FiLogOut,
+  FiMenu,
+  FiShoppingCart,
+  FiSun,
+  FiMoon,
+} from "react-icons/fi";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = ({ onToggleSidebar }) => {
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -41,6 +49,15 @@ const Navbar = ({ onToggleSidebar }) => {
       </div>
 
       <div className="navbar-right">
+        {/* Theme Toggle */}
+        <button
+          className="theme-toggle-btn"
+          onClick={toggleTheme}
+          title="Cambiar Tema"
+        >
+          {isDarkMode ? <FiSun /> : <FiMoon />}
+        </button>
+
         {/* Cart Icon */}
         <Link to="/cart" className="nav-item cart-icon-container">
           <FiShoppingCart size={20} />

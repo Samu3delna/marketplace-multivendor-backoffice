@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -42,96 +43,102 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
-          <Routes>
-            {/* Rutas públicas del Marketplace */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<CartPage />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <Routes>
+              {/* Rutas públicas del Marketplace */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/cart" element={<CartPage />} />
 
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <PublicRoute>
-                  <RegisterPage />
-                </PublicRoute>
-              }
-            />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <LoginPage />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <PublicRoute>
+                    <RegisterPage />
+                  </PublicRoute>
+                }
+              />
 
-            {/* Rutas protegidas - Cliente */}
-            <Route
-              path="/cliente/dashboard"
-              element={
-                <PrivateRoute roles={["cliente"]}>
-                  <DashboardCliente />
-                </PrivateRoute>
-              }
-            />
+              {/* Rutas protegidas - Cliente */}
+              <Route
+                path="/cliente/dashboard"
+                element={
+                  <PrivateRoute roles={["cliente"]}>
+                    <DashboardCliente />
+                  </PrivateRoute>
+                }
+              />
 
-            {/* Rutas protegidas - Vendedor */}
-            <Route
-              path="/vendedor/dashboard"
-              element={
-                <PrivateRoute roles={["vendedor"]}>
-                  <DashboardVendedor />
-                </PrivateRoute>
-              }
-            />
+              {/* Rutas protegidas - Vendedor */}
+              <Route
+                path="/vendedor/dashboard"
+                element={
+                  <PrivateRoute roles={["vendedor"]}>
+                    <DashboardVendedor />
+                  </PrivateRoute>
+                }
+              />
 
-            {/* Rutas protegidas - Administrador */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <PrivateRoute roles={["administrador"]}>
-                  <DashboardAdmin />
-                </PrivateRoute>
-              }
-            />
+              {/* Rutas protegidas - Administrador */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <PrivateRoute roles={["administrador"]}>
+                    <DashboardAdmin />
+                  </PrivateRoute>
+                }
+              />
 
-            {/* Rutas Comunes Protegidas */}
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute roles={["cliente", "vendedor", "administrador"]}>
-                  <ProfilePage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/orders"
-              element={
-                <PrivateRoute roles={["cliente", "vendedor", "administrador"]}>
-                  <MyOrdersPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/sales"
-              element={
-                <PrivateRoute roles={["vendedor", "administrador"]}>
-                  <SalesPage />
-                </PrivateRoute>
-              }
-            />
+              {/* Rutas Comunes Protegidas */}
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute
+                    roles={["cliente", "vendedor", "administrador"]}
+                  >
+                    <ProfilePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <PrivateRoute
+                    roles={["cliente", "vendedor", "administrador"]}
+                  >
+                    <MyOrdersPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/sales"
+                element={
+                  <PrivateRoute roles={["vendedor", "administrador"]}>
+                    <SalesPage />
+                  </PrivateRoute>
+                }
+              />
 
-            {/* Página de no autorizado */}
-            <Route path="/unauthorized" element={<UnauthorizedPage />} />
+              {/* Página de no autorizado */}
+              <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-            {/* Ruta no encontrada */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
+              {/* Ruta no encontrada */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

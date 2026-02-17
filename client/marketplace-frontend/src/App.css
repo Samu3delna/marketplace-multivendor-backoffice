@@ -58,7 +58,7 @@
   left: 0;
   right: 0;
   height: var(--navbar-height);
-  background: rgba(10, 10, 26, 0.85);
+  background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-color);
@@ -91,9 +91,31 @@
 }
 
 .menu-toggle:hover {
-  background: var(--accent-purple);
+  background: var(--accent-primary);
   color: white;
   transform: scale(1.05);
+}
+
+.theme-toggle-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+  margin-right: 15px;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  transform: rotate(15deg) scale(1.1);
 }
 
 .navbar-brand {
@@ -1487,14 +1509,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 210, 255, 0.1);
+  background: var(--bg-input);
   color: var(--admin-accent);
   padding: 6px 12px;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1px;
-  border: 1px solid rgba(0, 210, 255, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-user-brief {
@@ -1502,7 +1524,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 10px;
 }
 
@@ -1510,13 +1532,13 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 700;
-  box-shadow: 0 4px 10px rgba(0, 210, 255, 0.3);
+  box-shadow: var(--shadow-glow);
 }
 
 .user-name-admin {
@@ -1549,29 +1571,25 @@
 }
 
 .admin-link-active {
-  background: rgba(0, 210, 255, 0.1) !important;
+  background: var(--bg-glass) !important;
   color: var(--admin-accent) !important;
   border-left: none !important;
   box-shadow: inset 4px 0 0 -1px var(--admin-accent);
 }
 
 .admin-link:hover:not(.admin-link-active) {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: var(--bg-input) !important;
   transform: none !important;
 }
 
 /* Admin Dashboard Cards */
 .admin-stat-card {
-  border: 1px solid rgba(0, 210, 255, 0.1) !important;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 17, 26, 0.8) 0%,
-    rgba(5, 5, 16, 0.8) 100%
-  ) !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-card) !important;
 }
 
 .admin-stat-card .stat-icon {
-  background: rgba(0, 210, 255, 0.1) !important;
+  background: var(--bg-input) !important;
   color: var(--admin-accent) !important;
 }
 

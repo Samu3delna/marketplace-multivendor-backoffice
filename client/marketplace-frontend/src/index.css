@@ -4,53 +4,7 @@
    CSS VARIABLES & RESET
    ============================================ */
 :root {
-  /* Colors - Back to Dark Theme / Materio Dark Style */
-  --bg-primary: #0a0a1a;
-  --bg-secondary: #12122a;
-  --bg-card: rgba(20, 20, 50, 0.6);
-  --bg-card-hover: rgba(30, 30, 60, 0.8);
-  --bg-glass: rgba(255, 255, 255, 0.05);
-  --bg-input: rgba(255, 255, 255, 0.08);
-
-  /* Text - White for Dark Theme */
-  --text-primary: #f0f0ff;
-  --text-secondary: #9d9dba;
-  --text-muted: #6b6b8a;
-
-  /* Accent Colors - Same but glowing */
-  --accent-purple: #9155fd;
-  --accent-purple-hover: #804bdf;
-  --accent-blue: #3b82f6;
-  --accent-blue-hover: #2563eb;
-  --accent-green: #10b981;
-  --accent-orange: #f59e0b;
-  --accent-red: #ef4444;
-  --accent-pink: #ec4899;
-
-  /* Gradients - More intense for dark mode */
-  --gradient-primary: linear-gradient(135deg, #9155fd 0%, #3b82f6 100%);
-  --gradient-card: linear-gradient(
-    135deg,
-    rgba(145, 85, 253, 0.15) 0%,
-    rgba(59, 130, 246, 0.15) 100%
-  );
-  --gradient-purple: linear-gradient(135deg, #9155fd 0%, #a855f7 100%);
-  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-  --gradient-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-  --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #fb923c 100%);
-  --gradient-red: linear-gradient(135deg, #ef4444 0%, #ff8184 100%);
-
-  /* Borders - Darkened for consistency */
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-active: #9155fd;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(58, 53, 65, 0.1);
-  --shadow-md: 0 4px 8px rgba(58, 53, 65, 0.15);
-  --shadow-lg: 0 8px 16px rgba(58, 53, 65, 0.2);
-  --shadow-glow: 0 0 15px rgba(145, 85, 253, 0.2);
-
-  /* Sizing */
+  /* Default variables (can be overridden by themes) */
   --navbar-height: 64px;
   --sidebar-width: 260px;
   --sidebar-collapsed: 0px;
@@ -58,11 +12,77 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-
-  /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- MODO CLARO (Estilo Drone: Azules y Blancos) --- */
+.light-mode {
+  --bg-primary: #f4f7fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f4f8;
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --bg-input: #ffffff;
+
+  --text-primary: #1a2b3c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+
+  --accent-primary: #00aeef;
+  --accent-hover: #0096ce;
+  --accent-secondary: #3b82f6;
+
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-active: #00aeef;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 15px rgba(0, 174, 239, 0.2);
+
+  --gradient-primary: linear-gradient(135deg, #00aeef 0%, #3b82f6 100%);
+  --gradient-purple: linear-gradient(135deg, #00aeef 0%, #3b82f6 100%);
+  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-orange: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  --admin-accent: #00aeef;
+  --accent-purple: #00aeef;
+}
+
+/* --- MODO OSCURO (Estilo Sotheby's: Azul Real y Dorado) --- */
+.dark-mode {
+  --bg-primary: #000c17; /* Azul Real muy oscuro */
+  --bg-secondary: #001529; /* Azul Real */
+  --bg-card: rgba(0, 21, 41, 0.7);
+  --bg-card-hover: rgba(0, 33, 64, 0.9);
+  --bg-glass: rgba(0, 12, 23, 0.6);
+  --bg-input: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+  --text-muted: #7d7d7d;
+
+  --accent-primary: #d4af37; /* Dorado */
+  --accent-hover: #b8962f;
+  --accent-secondary: #c5a028;
+
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-active: #d4af37;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 15px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 15px rgba(212, 175, 55, 0.15);
+
+  --gradient-primary: linear-gradient(135deg, #d4af37 0%, #c5a028 100%);
+  --gradient-purple: linear-gradient(135deg, #d4af37 0%, #c5a028 100%);
+  --gradient-blue: linear-gradient(135deg, #c5a028 0%, #af8b21 100%);
+  --gradient-green: linear-gradient(135deg, #b8962f 0%, #9a7d25 100%);
+  --gradient-orange: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+  --admin-accent: #d4af37;
+  --accent-purple: #d4af37;
 }
 
 *,
@@ -121,13 +141,13 @@ body::before {
 }
 
 a {
-  color: var(--accent-purple);
+  color: var(--accent-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--accent-purple-hover);
+  color: var(--accent-hover);
 }
 
 input,
@@ -146,10 +166,11 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.3);
+  background: var(--accent-primary);
+  opacity: 0.3;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.5);
+  background: var(--accent-hover);
 }
