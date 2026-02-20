@@ -1,5 +1,6 @@
 # Marketplace Multivendor - Backoffice & Frontend
 
+https://marketplace-multivendor-backoffice.vercel.app
 Este proyecto consiste en una plataforma de Marketplace (estilo Amazon/MercadoLibre) con paneles para:
 
 - **Clientes**: Compras, carrito, perfil.
